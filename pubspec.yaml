@@ -40,6 +40,7 @@ dependencies:
   brasil_fields: ^1.14.3
   top_snackbar_flutter: ^3.1.0
   shared_preferences: ^2.2.3
+  flex_color_picker: ^3.4.1
 
 dev_dependencies:
   flutter_test:
