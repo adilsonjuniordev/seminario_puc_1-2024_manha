@@ -8,6 +8,12 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
+
+  final sizeEC = TextEditingController();
+  final colorEC = TextEditingController();
+  final descriptionEC = TextEditingController();
+  final priceEC = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,19 +25,25 @@ class _AddProductPageState extends State<AddProductPage> {
         child: Column(
           children: [
             TextFormField(
+              controller: descriptionEC,
               decoration: const InputDecoration(hintText: 'Descrição do produto'),
             ),
             const SizedBox(height: 10),
             TextFormField(
+              controller: priceEC,
               decoration: const InputDecoration(hintText: 'Preço'),
             ),
             const SizedBox(height: 10),
             TextFormField(
+              controller: colorEC,
               decoration: const InputDecoration(hintText: 'Cor'),
             ),
             const SizedBox(height: 10),
             TextFormField(
-              decoration: const InputDecoration(hintText: 'Tamanho'),
+              controller: sizeEC,
+              decoration: const InputDecoration(
+                hintText: 'Tamanho',
+              ),
             ),
             const SizedBox(height: 20),
             SizedBox(
