@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:puc_minas/app/core/constants/app_assets.dart';
 import 'package:puc_minas/app/core/constants/app_routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -28,10 +29,20 @@ class _SplashPageState extends State<SplashPage> {
                 ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  AppRoutes.login,
-                );
+              onPressed: () async {
+                var sp = await SharedPreferences.getInstance();
+
+                var result = sp.get('cpf');
+
+                if (result == null) {
+                  Navigator.of(context).pushNamed(
+                    AppRoutes.login,
+                  );
+                } else {
+                  Navigator.of(context).pushNamed(
+                    AppRoutes.home,
+                  );
+                }
               },
               child: const Text('ENTRAR'),
             ),

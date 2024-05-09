@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   validatorless: ^1.2.3
   brasil_fields: ^1.14.3
+  top_snackbar_flutter: ^3.1.0
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   flutter_test:

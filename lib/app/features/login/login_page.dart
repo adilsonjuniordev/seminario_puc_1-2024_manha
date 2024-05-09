@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:puc_minas/app/core/constants/app_assets.dart';
 import 'package:puc_minas/app/core/constants/app_routes.dart';
 import 'package:puc_minas/app/features/login/login_controller.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:validatorless/validatorless.dart';
 
 class LoginPage extends StatefulWidget {
@@ -62,12 +64,36 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     bool valid = formKey.currentState?.validate() ?? false;
 
                     if (valid) {
-                      LoginControler.login(cpf: '', password: '');
-                      Navigator.of(context).pushNamed(AppRoutes.home);
+                      showTopSnackBar(
+                        Overlay.of(context),
+                        const CustomSnackBar.info(message: 'Aguarde...'),
+                        snackBarPosition: SnackBarPosition.top,
+                      );
+
+                      bool success = await LoginControler.login(
+                        cpf: cpfEC.text.replaceAll('.', '').replaceAll('-', ''),
+                        password: passwordEC.text,
+                      );
+
+                      if (success) {
+                        Navigator.of(context).pushNamed(AppRoutes.home);
+                        showTopSnackBar(
+                          Overlay.of(context),
+                          const CustomSnackBar.success(message: 'Você efetuou o login!'),
+                          snackBarPosition: SnackBarPosition.top,
+                        );
+                      } else {
+                        showTopSnackBar(
+                          Overlay.of(context),
+                          const CustomSnackBar.error(
+                            message: 'Os dados informados não conferem',
+                          ),
+                        );
+                      }
                     }
                   },
                   child: const Row(
