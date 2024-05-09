@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ProductModel {
   final String size;
-  final double price;
+  final String price;
   final Color color;
   final String description;
 
@@ -18,7 +18,7 @@ class ProductModel {
 
   ProductModel copyWith({
     String? size,
-    double? price,
+    String? price,
     Color? color,
     String? description,
   }) {
@@ -42,7 +42,7 @@ class ProductModel {
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
       size: (map['size'] ?? '') as String,
-      price: (map['price'] ?? 0.0) as double,
+      price: (map['price'] ?? 0.0) as String,
       color: Color((map['color']??0) as int),
       description: (map['description'] ?? '') as String,
     );

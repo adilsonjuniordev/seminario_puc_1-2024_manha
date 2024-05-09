@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:puc_minas/app/core/components/product_card.dart';
 import 'package:puc_minas/app/core/constants/app_routes.dart';
+import 'package:puc_minas/app/core/models/product_model.dart';
 import 'package:puc_minas/app/features/home/home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<ProductModel> products = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +36,34 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed(AppRoutes.add);
+        onPressed: () async {
+          var product = await Navigator.of(context).pushNamed(AppRoutes.add);
+
+          if (product != null) {
+            products.add(product as ProductModel);
+            setState(() {});
+          }
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      body: Container(),
+      body: Padding(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            products.isEmpty
+                ? const Center(child: Text('Nenhum produto'))
+                : ListView.builder(
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ProductCard(product: products[index]),
+                    ),
+                    shrinkWrap: true,
+                    itemCount: products.length,
+                  ),
+          ],
+        ),
+      ),
     );
   }
 }
