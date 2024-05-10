@@ -13,6 +13,7 @@ class ProductCard extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: product.color),
         borderRadius: BorderRadius.circular(10),
+        color: product.color.withOpacity(0.2),
       ),
       child: Column(
         children: [
@@ -23,7 +24,10 @@ class ProductCard extends StatelessWidget {
               Text(product.size),
             ],
           ),
-          const Divider(),
+          Divider(
+            color: product.color,
+            thickness: 1,
+          ),
           Text(product.description),
         ],
       ),

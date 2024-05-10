@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:puc_minas/app/core/models/product_model.dart';
 import 'package:validatorless/validatorless.dart';
 
@@ -14,14 +18,15 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
-  final sizeEC = TextEditingController();
   final colorEC = TextEditingController();
   final descriptionEC = TextEditingController();
   final priceEC = TextEditingController();
 
-  final formKey = GlobalKey<FormState>();
-
   Color selectedColor = Colors.green;
+
+  String size = 'Médio';
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,22 +61,29 @@ class _AddProductPageState extends State<AddProductPage> {
                   decoration: const InputDecoration(hintText: 'Preço'),
                 ),
                 const SizedBox(height: 10),
-                TextFormField(
-                  validator: Validatorless.required(
-                    'Campo obrigatório',
-                  ),
-                  controller: colorEC,
-                  decoration: const InputDecoration(hintText: 'Cor'),
-                ),
-                const SizedBox(height: 10),
-                TextFormField(
-                  validator: Validatorless.required(
-                    'Campo obrigatório',
-                  ),
-                  controller: sizeEC,
-                  decoration: const InputDecoration(
-                    hintText: 'Tamanho',
-                  ),
+                const SizedBox(height: 20),
+                CustomRadioButton(
+                  buttonLables: const [
+                    'Pequeno',
+                    'Médio',
+                    'Grande',
+                  ],
+                  buttonValues: const [
+                    'Pequeno',
+                    'Médio',
+                    'Grande',
+                  ],
+                  radioButtonValue: (str) {
+                    size = str;
+                  },
+                  autoWidth: true,
+                  unSelectedColor: Colors.white,
+                  selectedColor: Colors.green,
+                  shapeRadius: 10,
+                  enableShape: true,
+                  enableButtonWrap: true,
+                  elevation: 5,
+                  defaultSelected: size,
                 ),
                 const SizedBox(height: 20),
                 GestureDetector(
@@ -80,45 +92,39 @@ class _AddProductPageState extends State<AddProductPage> {
                       context,
                       selectedColor,
                       actionButtons: const ColorPickerActionButtons(
-                        closeButton: false,
+                        closeButton: true,
                       ),
+                      barrierDismissible: false,
+                      barrierColor: Colors.black.withOpacity(0.7),
+                      backgroundColor: Colors.white,
                       pickersEnabled: {
                         ColorPickerType.primary: true,
-                        ColorPickerType.wheel: true,
                         ColorPickerType.accent: false,
-                        ColorPickerType.custom: false,
+                        ColorPickerType.wheel: true,
                       },
                       pickerTypeLabels: {
                         ColorPickerType.primary: 'Cor primária',
-                        ColorPickerType.wheel: 'Manual',
+                        ColorPickerType.wheel: 'Cromático',
                       },
                       elevation: 2,
-                      backgroundColor: Colors.white,
-                      selectedColorIcon: Icons.check,
-                      copyPasteBehavior: const ColorPickerCopyPasteBehavior(copyButton: true),
-                      barrierColor: Colors.black.withOpacity(0.8),
-                      borderColor: Colors.black12,
-                      wheelHasBorder: true,
-                      wheelSquareBorderRadius: 0,
-                      title: const Text('Selecionar Cor'),
-                      hasBorder: false,
-                      borderRadius: 50,
-                    ).then((color) => selectedColor = color);
-                    setState(() {});
+                      title: const Text('Selecione a cor do produto'),
+                      runSpacing: 15,
+                      spacing: 15,
+                    ).then((color) {
+                      selectedColor = color;
+                      setState(() {});
+                    });
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
                       border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Selecionar cor:',
-                          style: TextStyle(fontSize: 16),
-                        ),
+                        const Text('Selecione a cor:'),
                         Container(
                           height: 50,
                           width: 50,
@@ -138,17 +144,10 @@ class _AddProductPageState extends State<AddProductPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState?.validate() ?? false) {
-                        Color color = switch (colorEC.text.toLowerCase()) {
-                          'vermelho' => Colors.red,
-                          'verde' => const Color.fromRGBO(76, 175, 80, 1),
-                          'azul' => Colors.blue,
-                          _ => Colors.black,
-                        };
-
                         ProductModel product = ProductModel(
-                          size: sizeEC.text,
+                          size: size,
                           price: priceEC.text,
-                          color: color,
+                          color: selectedColor,
                           description: descriptionEC.text,
                         );
 
@@ -167,7 +166,7 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 )
               ],
-            ),
+            ).animate().slideY(begin: 1, end: 0, duration: 300.ms),
           ),
         ),
       ),
