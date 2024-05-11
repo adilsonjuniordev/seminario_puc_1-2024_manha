@@ -8,6 +8,8 @@
 
 Projeto desenvolvido em 05/2024, utilizando o framework Flutter, com o intuito de ministrar um seminário para os alunos da Puc Minas e fazer uma imersão completa, afim de conhecer os conceitos da linguagem e aprimorar os conhecimentos em programação.
 
+O Aplicativo tem como intuito, fazer a simulação de um login com CPF, e fazer um cadastro de roupas para gerenciar uma lista de roupas localmente.
+
 ## Stack utilizada
 
 **Mobile:** Flutter (SDK versão inicial: 3.19.6)

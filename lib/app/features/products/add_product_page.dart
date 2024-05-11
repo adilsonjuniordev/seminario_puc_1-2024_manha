@@ -1,14 +1,11 @@
-import 'dart:developer';
-
-import 'package:brasil_fields/brasil_fields.dart';
-import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:puc_minas/app/core/models/product_model.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:validatorless/validatorless.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
+import 'package:puc_minas/app/core/models/product_model.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 
 class AddProductPage extends StatefulWidget {
   const AddProductPage({super.key});

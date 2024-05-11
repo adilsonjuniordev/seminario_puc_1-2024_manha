@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:puc_minas/app/core/components/product_card.dart';
@@ -30,7 +29,9 @@ class _HomePageState extends State<HomePage> {
             onPressed: () async {
               var loggedOut = await HomeController.logout();
               if (loggedOut) {
-                Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+                if (context.mounted) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(AppRoutes.login, (route) => false);
+                }
               }
             },
             icon: const Icon(
@@ -75,17 +76,21 @@ class _HomePageState extends State<HomePage> {
                             if (deleted == true) {
                               try {
                                 products.removeAt(index);
-                                showTopSnackBar(
-                                  Overlay.of(context),
-                                  const CustomSnackBar.success(message: 'O produto foi excluído'),
-                                );
+                                if (context.mounted) {
+                                  showTopSnackBar(
+                                    Overlay.of(context),
+                                    const CustomSnackBar.success(message: 'O produto foi excluído'),
+                                  );
+                                }
                                 setState(() {});
                               } catch (e) {
                                 log('Falha ao excluir produto');
-                                showTopSnackBar(
-                                  Overlay.of(context),
-                                  const CustomSnackBar.error(message: 'Falha ao excluir o produto'),
-                                );
+                                if (context.mounted) {
+                                  showTopSnackBar(
+                                    Overlay.of(context),
+                                    const CustomSnackBar.error(message: 'Falha ao excluir o produto'),
+                                  );
+                                }
                               }
                             }
                             return deleted;

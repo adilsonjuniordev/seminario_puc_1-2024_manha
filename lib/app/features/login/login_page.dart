@@ -80,19 +80,23 @@ class _LoginPageState extends State<LoginPage> {
                       );
 
                       if (success) {
-                        Navigator.of(context).pushNamed(AppRoutes.home);
-                        showTopSnackBar(
-                          Overlay.of(context),
-                          const CustomSnackBar.success(message: 'Você efetuou o login!'),
-                          snackBarPosition: SnackBarPosition.top,
-                        );
+                        if (context.mounted) {
+                          Navigator.of(context).pushNamed(AppRoutes.home);
+                          showTopSnackBar(
+                            Overlay.of(context),
+                            const CustomSnackBar.success(message: 'Você efetuou o login!'),
+                            snackBarPosition: SnackBarPosition.top,
+                          );
+                        }
                       } else {
-                        showTopSnackBar(
-                          Overlay.of(context),
-                          const CustomSnackBar.error(
-                            message: 'Os dados informados não conferem',
-                          ),
-                        );
+                        if (context.mounted) {
+                          showTopSnackBar(
+                            Overlay.of(context),
+                            const CustomSnackBar.error(
+                              message: 'Os dados informados não conferem',
+                            ),
+                          );
+                        }
                       }
                     }
                   },

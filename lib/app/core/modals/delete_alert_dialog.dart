@@ -25,7 +25,6 @@ class _DeleteAlertDialogState extends State<DeleteAlertDialog> {
           },
           child: const Text('Cancelar'),
         ),
-
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(true);
